@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hello world
+    <form action="/write" method="post" id="write-form">
+        <input type="text" name="title">
+        <input type="text" name="content">
+        <button type="submit">write</button>
+    </form>
+    <div id="bbs"></div>
+</body>
+<script>
+
+    fetch("/read", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then(res => res.json())
+    .then(json => {
+        let bbs = document.getElementById("bbs")
+        for(i = 0; i < json.length; i++) {
+            let p = document.createElement("p");
+            p.innerHTML = json[i].title
+            bbs.appendChild(p);
+        }
+    })
+
+    let writeForm = document.getElementById("write-form");
+    writeForm.addEventListener("submit", e => {
+        e.preventDefault();
+        let data = {
+            title: e.target.title.value,
+            content: e.target.content.value
+        }
+        fetch("/write", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(json => {
+            let bbs = document.getElementById("bbs")
+            let p = document.createElement("p");
+            p.innerHTML = json.title
+            bbs.appendChild(p);
+        })
+    })
+</script>
+</html>
