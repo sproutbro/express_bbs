@@ -1,6 +1,6 @@
 # express_bbs
 
-http://152.69.226.250:81/
+http://129.154.48.242:83/
 
 갑자기 express mongodb 써보고싶었음
 MongoDB Atlas 사용하려다가 
